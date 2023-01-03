@@ -8,8 +8,20 @@ datasource db {
 }
 
 model User {
+    id Int @id @default(autoincrement())
+    email String @unique
+    password String
+    language String? @default("en")
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+    forms Form[]
+
+    @@map("users")
+}
+
+model Form {
   id Int @id @default(autoincrement())
-
-
-  @@map("users")
+  name String
+  ownerId Int @map("owner_id")
+  owner User @relation(fields: [ownerId], references: [id])
 }
