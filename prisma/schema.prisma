@@ -8,13 +8,13 @@ datasource db {
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
-  email        String   @unique
-  passwordHash String
+  id               Int      @id @default(autoincrement())
+  email            String   @unique
+  passwordHash     String
   refreshTokenHash String?
-  createdAt    DateTime @default(now()) @map("created_at")
-  updatedAt    DateTime @updatedAt @map("updated_at")
-  forms        Form[]
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+  forms            Form[]
 
   @@map("users")
 }
@@ -28,14 +28,50 @@ model Form {
   id             Int            @id @default(autoincrement())
   publicId       String         @default(uuid()) @map("public_id")
   name           String
-  hexColor       String         @map("hex_color")
+  description    String?
   isPublic       Boolean        @default(false) @map("is_public")
   permissionMode PermissionMode @default(VIEW) @map("permission_mode")
   ownerId        Int            @map("owner_id")
   owner          User           @relation(fields: [ownerId], references: [id])
   questions      Question[]
+  styleId        Int            @unique @map("style_id")
+  style          Style          @relation(fields: [styleId], references: [id])
 
   @@map("forms")
+}
+
+model Style {
+  id     Int     @id @default(autoincrement())
+  form   Form?
+  fonts  Font[]
+  colors Color[]
+
+  @@map("styles")
+}
+
+model Color {
+  id                  Int      @id @default(autoincrement())
+  hex                 String
+  backgroundHexColors String[]
+  styleId             Int      @map("style_id")
+  style               Style    @relation(fields: [styleId], references: [id])
+}
+
+enum FontType {
+  HEADER
+  QUESTION
+  TEXT
+}
+
+model Font {
+  id      Int      @id @default(autoincrement())
+  type    FontType
+  name    String
+  size    Int
+  styleId Int      @map("style_id")
+  style   Style    @relation(fields: [styleId], references: [id])
+
+  @@map("fonts")
 }
 
 enum QuestionType {
