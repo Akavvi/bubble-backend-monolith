@@ -5,5 +5,5 @@ export class QuestionDto {
   id: string;
 
   @ApiProperty()
-  formId: number;
+  form_id: number;
 }
