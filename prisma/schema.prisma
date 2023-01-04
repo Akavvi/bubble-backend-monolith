@@ -55,6 +55,8 @@ model Color {
   backgroundHexColors String[]
   styleId             Int      @map("style_id")
   style               Style    @relation(fields: [styleId], references: [id])
+
+  @@map("colors")
 }
 
 enum FontType {
