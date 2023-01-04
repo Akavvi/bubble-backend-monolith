@@ -41,22 +41,13 @@ model Form {
 }
 
 model Style {
-  id     Int     @id @default(autoincrement())
-  form   Form?
-  fonts  Font[]
-  colors Color[]
+  id                  Int      @id @default(autoincrement())
+  form                Form?
+  fonts               Font[]
+  hexColor            String
+  backgroundHexColors String[]
 
   @@map("styles")
-}
-
-model Color {
-  id                  Int      @id @default(autoincrement())
-  hex                 String
-  backgroundHexColors String[]
-  styleId             Int      @map("style_id")
-  style               Style    @relation(fields: [styleId], references: [id])
-
-  @@map("colors")
 }
 
 enum FontType {
