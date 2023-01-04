@@ -8,20 +8,61 @@ datasource db {
 }
 
 model User {
-    id Int @id @default(autoincrement())
-    email String @unique
-    password String
-    language String? @default("en")
-    createdAt DateTime @default(now()) @map("created_at")
-    updatedAt DateTime @updatedAt @map("updated_at")
-    forms Form[]
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String
+  refreshTokenHash String?
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  forms        Form[]
 
-    @@map("users")
+  @@map("users")
+}
+
+enum PermissionMode {
+  VIEW
+  EDIT
 }
 
 model Form {
-  id Int @id @default(autoincrement())
-  name String
-  ownerId Int @map("owner_id")
-  owner User @relation(fields: [ownerId], references: [id])
+  id             Int            @id @default(autoincrement())
+  publicId       String         @default(uuid()) @map("public_id")
+  name           String
+  hexColor       String         @map("hex_color")
+  isPublic       Boolean        @default(false) @map("is_public")
+  permissionMode PermissionMode @default(VIEW) @map("permission_mode")
+  ownerId        Int            @map("owner_id")
+  owner          User           @relation(fields: [ownerId], references: [id])
+  questions      Question[]
+
+  @@map("forms")
+}
+
+enum QuestionType {
+  TEXT
+  RADIO
+  CHECK
+  TABLE
+  IMAGE
+}
+
+model Question {
+  id      Int          @id @default(autoincrement())
+  type    QuestionType
+  formId  Int          @map("form_id")
+  form    Form         @relation(fields: [formId], references: [id])
+  options Option[]
+
+  @@map("questions")
+}
+
+model Option {
+  id         Int      @id @default(autoincrement())
+  value      String?
+  cell       String?
+  row        String?
+  questionId Int      @map("question_id")
+  question   Question @relation(fields: [questionId], references: [id])
+
+  @@map("options")
 }
