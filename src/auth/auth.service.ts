@@ -1,4 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
 import { UserService } from '../user/user.service';
 import { LoginDto } from './dto';
 import { JwtPayload, Tokens } from './types';
@@ -16,6 +17,7 @@ import {
 export class AuthService {
   constructor(
     private readonly configService: ConfigService,
+    private readonly prismaService: PrismaService,
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
   ) {}

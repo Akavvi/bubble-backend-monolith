@@ -12,19 +12,17 @@ export class FormService {
   ) {}
   private readonly form = this.prisma.form;
 
-  async create({ name, style }: CreateFormDto, email: string) {
+  async create(
+    { name, hexColor = generateHexColor() }: CreateFormDto,
+    email: string,
+  ) {
     const owner = await this.users.findByEmail(email);
     return this.form.create({
       data: {
         name,
+        hexColor,
         ownerId: owner.id,
-        style: {
-            hexColor: style.hexColor,
-            backgroundHexColors: style.backgroundHexColors,
-            font: style.font
-          },
       },
-      //TODO: NEED TO FIX, TYPES NOT CORRECT
     });
   }
 
@@ -32,14 +30,6 @@ export class FormService {
     return this.form.findFirstOrThrow({
       where: {
         publicId: uuid,
-      },
-    });
-  }
-
-  async findById(id: number) {
-    return this.form.findFirstOrThrow({
-      where: {
-        id,
       },
     });
   }

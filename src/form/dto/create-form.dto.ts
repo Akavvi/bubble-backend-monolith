@@ -1,10 +1,10 @@
-import { IsOptional, IsString } from 'class-validator';
-import { StyleDto } from './style.dto';
+import { IsHexColor, IsOptional, IsString } from 'class-validator';
 
 export class CreateFormDto {
   @IsString()
   name: string;
 
   @IsOptional()
-  style: StyleDto;
+  @IsHexColor()
+  hexColor?: string;
 }
