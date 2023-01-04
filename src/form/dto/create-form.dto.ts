@@ -1,11 +1,10 @@
-import { IsHexColor, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsHexColor, IsOptional, IsString } from 'class-validator';
 
 export class CreateFormDto {
   @IsString()
-  @IsNotEmpty()
   name: string;
 
-  @IsHexColor()
   @IsOptional()
-  hexColor: string;
+  @IsHexColor()
+  hexColor?: string;
 }
