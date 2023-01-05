@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { Form } from '@prisma/client';
 import { User } from 'src/common/decorators';
+import { JwtGuard } from 'src/common/guards';
 import { CreateFormDto } from './dto';
 import { FormService } from './form.service';
 
@@ -21,6 +22,7 @@ export class FormController {
   }
 
   @Post('/create')
+  @UseGuards(JwtGuard)
   async create(
     @Body()
     dto: CreateFormDto,
