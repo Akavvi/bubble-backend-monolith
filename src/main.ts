@@ -30,7 +30,7 @@ async function bootstrap() {
     secret: 'my-secret',
   });
 
-  await app.listen(3333);
+  await app.listen(3334);
 }
 
 bootstrap();

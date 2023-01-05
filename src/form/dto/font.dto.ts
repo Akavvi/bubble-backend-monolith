@@ -1,11 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { FontType } from '@prisma/client';
-import { StyleDto } from './style.dto';
+import { Font, FontType } from '@prisma/client';
 
 export class FontDto {
-  @ApiProperty()
-  id: number;
-
   @ApiProperty()
   type: FontType;
 
@@ -15,9 +11,9 @@ export class FontDto {
   @ApiProperty()
   size: number;
 
-  @ApiProperty()
-  styleId: number;
-
-  @ApiProperty()
-  style: StyleDto;
+  constructor(partial: Partial<Font>) {
+    this.type = partial.type;
+    this.name = partial.name;
+    this.size = partial.size;
+  }
 }

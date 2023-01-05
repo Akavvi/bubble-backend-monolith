@@ -31,10 +31,10 @@ model Form {
   description    String?
   isPublic       Boolean        @default(false) @map("is_public")
   permissionMode PermissionMode @default(VIEW) @map("permission_mode")
+  style          Style?
   ownerId        Int            @map("owner_id")
   owner          User           @relation(fields: [ownerId], references: [id])
   questions      Question[]
-  style          Style?
 
   @@map("forms")
 }

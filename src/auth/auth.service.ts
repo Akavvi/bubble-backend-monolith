@@ -3,10 +3,9 @@ import { UserService } from '../user/user.service';
 import { LoginDto } from './dto';
 import { JwtPayload, Tokens } from './types';
 import * as argon2 from 'argon2';
-import { getJwtConfig } from '../common/configs';
+import { getJwtConfig, getRefreshConfig } from '../common/configs';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { getRefreshConfig } from '../common/configs/refresh.config';
 import {
   ACCESS_DENIED_ERROR,
   USER_INCORRECT_PASSWORD_ERROR,

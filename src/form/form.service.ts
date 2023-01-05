@@ -18,8 +18,8 @@ export class FormService {
         ownerId,
         style: {
           create: {
-            hexColor: style.hexColor,
-            backgroundHexColors: style.backgroundHexColors,
+            hexColor: style.hex_color,
+            backgroundHexColors: style.background_hex_colors,
             fonts: {
               create: style.fonts,
             },
@@ -33,6 +33,15 @@ export class FormService {
     return this.form.findFirstOrThrow({
       where: {
         publicId: uuid,
+      },
+      include: {
+        owner: true,
+        style: {
+          include: {
+            fonts: true,
+          },
+        },
+        questions: true,
       },
     });
   }

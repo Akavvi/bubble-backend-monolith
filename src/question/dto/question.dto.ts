@@ -1,9 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Question, QuestionType } from '@prisma/client';
 
 export class QuestionDto {
-  @ApiProperty()
-  id: string;
+  @ApiProperty({ enum: ['TEXT', 'RADIO', 'CHECK', 'TABLE', 'IMAGE'] })
+  type: QuestionType;
 
-  @ApiProperty()
-  form_id: number;
+  constructor(partial: Partial<Question>) {
+    this.type = partial.type;
+  }
 }

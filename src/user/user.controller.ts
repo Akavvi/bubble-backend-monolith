@@ -2,7 +2,7 @@ import { Controller, Get, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { JwtGuard } from '../common/guards';
 import { User } from '../common/decorators';
-import { UserWithFormsDto } from './dto';
+import { UserExtraDto } from './dto';
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiBearerAuth()
@@ -11,11 +11,11 @@ import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @ApiOkResponse({ type: UserWithFormsDto })
+  @ApiOkResponse({ type: UserExtraDto })
   @UseGuards(JwtGuard)
   @Get()
   async getUser(@User('sub') userId: number) {
     const user = await this.userService.findWithForms(userId);
-    return new UserWithFormsDto(user);
+    return new UserExtraDto(user);
   }
 }
