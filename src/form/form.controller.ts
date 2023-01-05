@@ -24,8 +24,8 @@ export class FormController {
   async create(
     @Body()
     dto: CreateFormDto,
-    @User('email') email: string,
+    @User('sub') ownerId: number,
   ): Promise<Form> {
-    return this.formService.create(dto, email);
+    return this.formService.create(dto, ownerId);
   }
 }

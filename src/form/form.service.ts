@@ -12,19 +12,19 @@ export class FormService {
   ) {}
   private readonly form = this.prisma.form;
 
-  async create({ name, style }: CreateFormDto, email: string) {
-    const owner = await this.users.findByEmail(email);
+  async create({ name, style }: CreateFormDto, ownerId: number) {
     return this.form.create({
       data: {
         name,
-        ownerId: owner.id,
+        ownerId: ownerId,
         style: {
+          create: {
             hexColor: style.hexColor,
             backgroundHexColors: style.backgroundHexColors,
-            font: style.font
+            fonts: style.fonts,
           },
+        },
       },
-      //TODO: NEED TO FIX, TYPES NOT CORRECT
     });
   }
 

@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { FontDto } from './font.dto';
 
 export class StyleDto {
   @ApiProperty()
@@ -8,7 +9,7 @@ export class StyleDto {
   formId: number;
 
   @ApiProperty()
-  font: string;
+  fonts: FontDto[];
 
   @ApiProperty()
   hexColor: string;
