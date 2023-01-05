@@ -34,15 +34,15 @@ model Form {
   ownerId        Int            @map("owner_id")
   owner          User           @relation(fields: [ownerId], references: [id])
   questions      Question[]
-  styleId        Int            @unique @map("style_id")
-  style          Style          @relation(fields: [styleId], references: [id])
+  style          Style?
 
   @@map("forms")
 }
 
 model Style {
   id                  Int      @id @default(autoincrement())
-  form                Form?
+  formId              Int      @unique @map("form_id")
+  form                Form     @relation(fields: [formId], references: [id])
   fonts               Font[]
   hexColor            String
   backgroundHexColors String[]

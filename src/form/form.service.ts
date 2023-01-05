@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UserService } from 'src/user/user.service';
 import { CreateFormDto } from './dto';
-import { generateHexColor } from './lib';
 
 @Injectable()
 export class FormService {
@@ -16,12 +15,14 @@ export class FormService {
     return this.form.create({
       data: {
         name,
-        ownerId: ownerId,
+        ownerId,
         style: {
           create: {
             hexColor: style.hexColor,
             backgroundHexColors: style.backgroundHexColors,
-            fonts: style.fonts,
+            fonts: {
+              create: style.fonts,
+            },
           },
         },
       },
