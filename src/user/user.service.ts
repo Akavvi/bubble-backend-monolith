@@ -9,7 +9,7 @@ export class UserService {
   private readonly user = this.prismaService.user;
 
   async findWithForms(id: number) {
-    return this.user.findFirstOrThrow({
+    return this.user.findFirst({
       where: {
         id,
       },
@@ -20,7 +20,7 @@ export class UserService {
   }
 
   async findByEmail(email: string) {
-    return this.user.findFirstOrThrow({
+    return this.user.findFirst({
       where: {
         email,
       },
